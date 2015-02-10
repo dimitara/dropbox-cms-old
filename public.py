@@ -9,4 +9,5 @@ public = Blueprint('public', __name__)
 
 @public.route('/')
 def home():
-    return render_template('public/index.html')
+    website_name = u'Симента ООД'
+    return render_template('public/index.html', website_name=website_name)
