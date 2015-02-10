@@ -21,7 +21,7 @@ def login():
         else:
             pass
 
-    return render_template('login.html', error=error)
+    return render_template('admin/login.html', error=error)
 
 @admin.route('/logout')
 def logout():
@@ -125,7 +125,7 @@ def dashboard():
         account_info = client.account_info()
         real_name = account_info["display_name"]
 
-    return render_template('dashboard.html', real_name=real_name)
+    return render_template('admin/dashboard.html', real_name=real_name)
 
 def get_auth_flow():
     redirect_uri = url_for('admin.dropbox_auth_finish', _external=True)
