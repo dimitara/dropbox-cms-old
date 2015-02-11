@@ -159,12 +159,12 @@ def create_file(file_name, content):
 def generate_scaffold():
     sections = ['team', 'partners', 'history', 'capacity', 'certification', 'breeds', 'contacts']
 
-    make_dir('website')
-    make_dir('website/gallery')
-    make_dir('website/sections')
+    make_dir('static/website')
+    make_dir('static/website/gallery')
+    make_dir('static/website/sections')
 
     for idx, section in enumerate(sections):
-        dir_name = 'website/sections/%s-%s' % (idx, section)
+        dir_name = 'static/website/sections/%s-%s' % (idx, section)
         make_dir(dir_name)
         for lang in LANGUAGES:
             make_dir('%s/%s' % (dir_name, lang))

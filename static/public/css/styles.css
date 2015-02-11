@@ -1,0 +1,7 @@
+@import url(http://fonts.googleapis.com/css?family=Comfortaa:400,300&subset=latin,cyrillic-ext,greek);
+
+body{
+    font-family: 'Comfortaa', cursive;
+    margin:0;
+    padding:0;
+}

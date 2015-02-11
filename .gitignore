@@ -10,6 +10,7 @@ __pycache__/
 venv/
 env/
 website/
+static/public/website/
 build/
 develop-eggs/
 dist/
