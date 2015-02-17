@@ -1,7 +1,60 @@
-@import url(http://fonts.googleapis.com/css?family=Comfortaa:400,300&subset=latin,cyrillic-ext,greek);
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,400,300,600&subset=latin,cyrillic-ext);
 
 body{
-    font-family: 'Comfortaa', cursive;
+    font-family: 'Open Sans', sans-serif;
     margin:0;
     padding:0;
+}
+
+h2{
+    font-weight:200;
+}
+
+section{
+    width:100%;
+}
+
+.content{
+    width:100%;
+    height:100%;
+}
+
+.header{
+    width:800px;
+    height:120px;
+    margin:0 auto;
+}
+
+.header img{
+    display:inline-block;
+    width:100px;
+    margin-top:10px;
+}
+
+.header h2{
+    display:inline-block;
+    width:540px;
+    margin-left:50px;
+    line-height:80px;
+    vertical-align:top;
+}
+
+.team{
+    background:rgb(160,202,160);
+    min-height:200px;
+}
+
+.partners{
+    background:rgb(228,111,88);
+    min-height:150px;
+}
+
+.history{
+    background:rgb(242,227,200);
+    min-height:200px;
+}
+
+.contacts{
+    background:rgb(160,202,160);
+    min-height:200px;
 }

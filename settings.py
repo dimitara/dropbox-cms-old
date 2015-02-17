@@ -5,3 +5,7 @@ LANGUAGES = ['bg', 'en', 'gr']
 
 DROPBOX_APP_KEY = ''
 DROPBOX_APP_SECRET = ''
+
+
+#WEBSITE SPECIFIC
+SECTIONS = ['team', 'partners', 'history', 'contacts']

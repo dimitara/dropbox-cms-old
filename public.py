@@ -3,14 +3,15 @@ import os
 import sys
 
 from flask import Flask, request, session, g, redirect, url_for, abort, render_template, Blueprint
-
+from cms import CMS
 
 public = Blueprint('public', __name__)
 
 @public.route('/')
 def home():
-    website_title = u''
-    website_name = u''
-    website_header = u''
+    cms = CMS('static/resources/', 'website/settings')
 
-    return render_template('public/index.html', website_name=website_name, website_header=website_header)
+    website_title = cms.title['bg']
+    website_heading = cms.heading['bg']
+
+    return render_template('public/index.html', website_title=website_title, website_heading=website_heading)

@@ -5,7 +5,7 @@ import db
 from sqlite3 import dbapi2 as sqlite3
 from flask import request, session, g, redirect, url_for, abort, render_template, flash, _app_ctx_stack, Blueprint
 from dropbox.client import DropboxClient, DropboxOAuth2Flow
-from settings import DATABASE, DROPBOX_APP_KEY, DROPBOX_APP_SECRET, LANGUAGES
+from settings import DATABASE, DROPBOX_APP_KEY, DROPBOX_APP_SECRET, LANGUAGES, SECTIONS
 
 admin = Blueprint('admin', __name__)
 
@@ -157,15 +157,34 @@ def create_file(file_name, content):
     out.close()
 
 def generate_scaffold():
-    sections = ['team', 'partners', 'history', 'capacity', 'certification', 'breeds', 'contacts']
+    make_dir('static/resources')
+    make_dir('website')
 
-    make_dir('static/website')
-    make_dir('static/website/gallery')
-    make_dir('static/website/sections')
+    generate_gallery()
+    generate_sections()
+    generate_settings()
 
-    for idx, section in enumerate(sections):
-        dir_name = 'static/website/sections/%s-%s' % (idx, section)
+def generate_gallery():
+    make_dir('static/resources/gallery')
+
+def generate_sections():
+    make_dir('static/resources/sections')
+
+    for idx, section in enumerate(SECTIONS):
+        dir_name = 'static/resources/sections/%s' % (section)
         make_dir(dir_name)
         for lang in LANGUAGES:
             make_dir('%s/%s' % (dir_name, lang))
             create_file('%s/%s/%s' % (dir_name, lang, 'content.txt'), '')
+
+def generate_settings():
+    make_dir('website/settings')
+    for lang in LANGUAGES:
+        make_dir('website/settings/%s' % lang)
+
+        create_file('website/settings/%s/%s' % (lang, 'title.txt'), 'This is my website')
+        create_file('website/settings/%s/%s' % (lang, 'heading.txt'), 'Here is what you see on the top of the website')
+        create_file('website/settings/%s/%s' % (lang, 'description.txt'), 'Description for better SEO')
+        create_file('website/settings/%s/%s' % (lang, 'keywords.txt'), 'Keywords for better SEO')
+
+    create_file('website/settings/%s' % 'analytics.txt', '<!--Put Google Analytics code here-->')
