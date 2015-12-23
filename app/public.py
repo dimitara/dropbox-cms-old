@@ -19,8 +19,9 @@ def home():
         "keywords": resource.keywords[lang],
         "description": resource.description[lang],
         "navigation": resource.get_navigations(lang),
-        "sections": resource.get_sections(lang),
-        "analytics": resource.analytics_tracking
+        "pages": resource.get_pages(lang),
+        #"sections": resource.get_sections(lang),
+        #"analytics": resource.analytics_tracking
     }
 
     return render_template('public/index.html', content=content)
