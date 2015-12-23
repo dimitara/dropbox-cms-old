@@ -5,10 +5,12 @@ import sys
 from flask import Flask, request, session, g, redirect, url_for, abort, render_template, Blueprint, jsonify
 from resources import Resources
 
-public = Blueprint('public', __name__)
-resource = Resources('static/resources', 'static/resources/system/settings')
+from settings import RESOURCES_PATH, SETTINGS_PATH
 
-@public.route('/')
+public_api = Blueprint('public', __name__)
+resource = Resources(RESOURCES_PATH, SETTINGS_PATH)
+
+@public_api.route('/')
 def home():
     global resource
     lang = request.args.get('l') or 'bg'

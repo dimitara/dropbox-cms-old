@@ -12,4 +12,4 @@ DROPBOX_APP_SECRET = ''
 SECTIONS = ['about', 'contact']
 
 RESOURCES_PATH = 'resources'
-SETTINGS_PATH = 'static/resources/system/settings'
+SETTINGS_PATH = 'settings'

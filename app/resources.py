@@ -20,12 +20,12 @@ def escape(input):
     return input
 
 class Resources:
-    def __init__(self, content_location, settings_location):
-        self.content_location = content_location
+    def __init__(self, resource_location, settings_location):
+        self.resource_location = resource_location
         self.settings_location = settings_location
 
-        self.section_locations = content_location + '/sections'
-        self.pages_location = content_location + '/pages'
+        self.section_locations = resource_location + '/sections'
+        self.pages_location = resource_location + '/pages'
 
         self.title = {}
         self.heading = {}
@@ -39,7 +39,7 @@ class Resources:
 
         self.pages = {}
 
-        #self.load_settings()
+        self.load_settings()
         self.load_navigations()
         #self.load_sections()
         self.load_pages()
