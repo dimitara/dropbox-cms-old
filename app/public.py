@@ -22,8 +22,7 @@ def home():
         "description": resource.description[lang],
         "navigation": resource.get_navigations(lang),
         "pages": resource.get_pages(lang),
-        #"sections": resource.get_sections(lang),
-        #"analytics": resource.analytics_tracking
+        "analytics": resource.analytics_tracking
     }
 
     return render_template('public/index.html', content=content)

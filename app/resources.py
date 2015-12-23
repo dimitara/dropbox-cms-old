@@ -151,7 +151,7 @@ class Resources:
 
             try:
                 for locale in LANGUAGES:
-                    nav_file = open('%s/%s/%s/%s' % (self.content_location, key, locale, 'nav.txt'), 'r')
+                    nav_file = open('%s/%s/%s/%s' % (self.resource_location, key, locale, 'nav.txt'), 'r')
                     nav[locale] = escape(nav_file.read())
                     nav['href'] = "#" + key
                     nav['index'] = i - 1
