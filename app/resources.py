@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
 
+import os
 import markdown
 from settings import LANGUAGES, SECTIONS
 from flask import request, session, g, redirect, url_for, abort, render_template, flash, _app_ctx_stack, Blueprint, jsonify, Markup
 
 cms = Blueprint('cms', __name__)
+SECTIONS_KEYWORD = 'sections'
+GALLERY_KEYWORD = 'gallery'
 
 def escape(input):
     q1 = u'тАЬ'
@@ -16,10 +19,13 @@ def escape(input):
 
     return input
 
-class CMS:
+class Resources:
     def __init__(self, content_location, settings_location):
         self.content_location = content_location
         self.settings_location = settings_location
+
+        self.section_locations = content_location + '/sections'
+        self.pages_location = content_location + '/pages'
 
         self.title = {}
         self.heading = {}
@@ -31,20 +37,87 @@ class CMS:
         self.sections = {}
         self.analytics_tracking = ''
 
-        self.load_settings()
+        self.pages = {}
+
+        #self.load_settings()
         self.load_navigations()
-        self.load_sections()
+        #self.load_sections()
+        self.load_pages()
 
     def load_sections(self):
         for key in SECTIONS:
             self.sections[key] = {}
             for locale in LANGUAGES:
                 self.sections[key][locale] = {}
-                content_file = open('%s/%s/%s/%s' % (self.content_location, key, locale, 'content.txt'), 'r')
+                content_file = open('%s/%s/%s/%s' % (self.section_locations, key, locale, 'content.txt'), 'r')
 
                 self.sections[key][locale] = {}
                 self.sections[key][locale]['content'] = Markup(markdown.markdown(escape(content_file.read())))
 
+                content_file.close()
+
+    def load_pages(self):
+        self.pages = []
+        self.pages.append(self.parse_page(self.pages_location, 'root'))
+
+
+    def parse_page(self, folder, key):
+        page = {
+            'pages': [],
+            'slug': key
+        }
+        
+        if os.path.isdir(folder):
+            self.parse_files(page, folder)
+
+            items = os.listdir(folder)
+            for item in items:
+                if item in LANGUAGES: continue
+
+                if item == SECTIONS_KEYWORD:
+                    self.parse_sections(page, folder)
+                    continue
+
+                if item == GALLERY_KEYWORD:
+                    self.parse_gallery(page, folder)
+                    continue
+                
+                item_path = '%s/%s' % (folder, item)
+                if os.path.isdir(item_path):
+                    page['pages'].append(self.parse_page(item_path, item))
+                
+            return page
+        else:
+            return None    
+
+    def parse_sections(self, page, folder):
+        page['sections'] = []
+        pass
+
+    def parse_gallery(self, page, folder):
+        pass
+
+    def parse_files(self, page, folder):
+        for lang in LANGUAGES:
+            page[lang] = {}
+
+            f_title = '%s/%s/%s' % (folder, lang, 'title.txt')
+            f_nav = '%s/%s/%s' % (folder, lang, 'nav.txt')
+            f_content = '%s/%s/%s' % (folder, lang, 'content.txt')
+
+            if os.path.exists(f_title):
+                title_file = open(f_title, 'r')
+                page[lang]['title'] = escape(title_file.read())
+                title_file.close()
+
+            if os.path.exists(f_nav):
+                nav_file = open(f_nav, 'r')
+                page[lang]['nav'] = escape(nav_file.read())
+                nav_file.close()
+
+            if os.path.exists(f_content):
+                content_file = open(f_content, 'r')
+                page[lang]['content'] = escape(content_file.read())
                 content_file.close()
 
 
@@ -86,7 +159,8 @@ class CMS:
                     nav_file.close()
 
                 self.navigations.append(nav)
-            except:
+            except Exception as e:
+                print e
                 pass
 
 
@@ -105,3 +179,11 @@ class CMS:
             sections[key]['content'] = self.sections[key][locale]['content']
 
         return sections
+
+    def get_pages(self, locale):
+        return self.pages
+
+    def publish(self):
+        #self.load_settings()
+        self.load_navigations()
+        self.load_pages()

@@ -10,3 +10,6 @@ DROPBOX_APP_SECRET = ''
 
 #WEBSITE SPECIFIC
 SECTIONS = ['about', 'contact']
+
+RESOURCES_PATH = 'resources'
+SETTINGS_PATH = 'static/resources/system/settings'
